@@ -1,0 +1,30 @@
+content-blocks:
+    pattern:  /
+    defaults: { _controller: "MhCmsBundle:ContentBlock:index" }
+
+content-blocks_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MhCmsBundle:ContentBlock:show" }
+
+content-blocks_new:
+    pattern:  /new
+    defaults: { _controller: "MhCmsBundle:ContentBlock:new" }
+
+content-blocks_create:
+    pattern:  /create
+    defaults: { _controller: "MhCmsBundle:ContentBlock:create" }
+    requirements: { _method: post }
+
+content-blocks_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MhCmsBundle:ContentBlock:edit" }
+
+content-blocks_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MhCmsBundle:ContentBlock:update" }
+    requirements: { _method: post }
+
+content-blocks_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MhCmsBundle:ContentBlock:delete" }
+    requirements: { _method: post }

@@ -1,0 +1,41 @@
+<h1>ContentBlockTemplate list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Template_name</th>
+            <th>Template_description</th>
+            <th>Template_include_path</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('content-block-templates_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.templatename }}</td>
+            <td>{{ entity.templatedescription }}</td>
+            <td>{{ entity.templateincludepath }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('content-block-templates_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('content-block-templates_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('content-block-templates_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

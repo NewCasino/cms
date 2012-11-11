@@ -1,3 +1,23 @@
 mh_cms_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: MhCmsBundle:Default:index }
+
+MhCmsBundle_websites:
+    resource: "@MhCmsBundle/Resources/config/routing/website.yml"
+    prefix:   /websites
+    
+MhCmsBundle_pages:
+    resource: "@MhCmsBundle/Resources/config/routing/page.yml"
+    prefix:   /pages
+    
+MhCmsBundle_content-blocks:
+    resource: "@MhCmsBundle/Resources/config/routing/contentblock.yml"
+    prefix:   /content-blocks
+    
+MhCmsBundle_content-block-types:
+    resource: "@MhCmsBundle/Resources/config/routing/contentblocktype.yml"
+    prefix:   /content-block-types
+    
+MhCmsBundle_content-block-templates:
+    resource: "@MhCmsBundle/Resources/config/routing/contentblocktemplate.yml"
+    prefix:   /content-block-templates

@@ -1,0 +1,30 @@
+websites:
+    pattern:  /
+    defaults: { _controller: "MhCmsBundle:Website:index" }
+
+websites_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MhCmsBundle:Website:show" }
+
+websites_new:
+    pattern:  /new
+    defaults: { _controller: "MhCmsBundle:Website:new" }
+
+websites_create:
+    pattern:  /create
+    defaults: { _controller: "MhCmsBundle:Website:create" }
+    requirements: { _method: post }
+
+websites_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MhCmsBundle:Website:edit" }
+
+websites_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MhCmsBundle:Website:update" }
+    requirements: { _method: post }
+
+websites_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MhCmsBundle:Website:delete" }
+    requirements: { _method: post }

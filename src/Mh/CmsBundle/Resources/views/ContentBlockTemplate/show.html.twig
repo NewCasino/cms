@@ -1,0 +1,41 @@
+<h1>ContentBlockTemplate</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Template_name</th>
+            <td>{{ entity.templatename }}</td>
+        </tr>
+        <tr>
+            <th>Template_description</th>
+            <td>{{ entity.templatedescription }}</td>
+        </tr>
+        <tr>
+            <th>Template_include_path</th>
+            <td>{{ entity.templateincludepath }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('content-block-templates') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('content-block-templates_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('content-block-templates_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

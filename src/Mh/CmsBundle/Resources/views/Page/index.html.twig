@@ -1,0 +1,45 @@
+<h1>Page list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Page_name</th>
+            <th>Page_create_at</th>
+            <th>Page_updated_at</th>
+            <th>Page_uri</th>
+            <th>Page_max_children</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('pages_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.pagename }}</td>
+            <td>{{ entity.pagecreateat }}</td>
+            <td>{{ entity.pageupdatedat }}</td>
+            <td>{{ entity.pageuri }}</td>
+            <td>{{ entity.pagemaxchildren }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('pages_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('pages_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('pages_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,30 @@
+pages:
+    pattern:  /
+    defaults: { _controller: "MhCmsBundle:Page:index" }
+
+pages_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MhCmsBundle:Page:show" }
+
+pages_new:
+    pattern:  /new
+    defaults: { _controller: "MhCmsBundle:Page:new" }
+
+pages_create:
+    pattern:  /create
+    defaults: { _controller: "MhCmsBundle:Page:create" }
+    requirements: { _method: post }
+
+pages_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MhCmsBundle:Page:edit" }
+
+pages_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MhCmsBundle:Page:update" }
+    requirements: { _method: post }
+
+pages_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MhCmsBundle:Page:delete" }
+    requirements: { _method: post }
