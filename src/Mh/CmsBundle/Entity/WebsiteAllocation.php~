@@ -1,0 +1,80 @@
+<?php
+
+namespace Mh\CmsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Mh\CmsBundle\Entity\WebsiteAllocation
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class WebsiteAllocation
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer $website_owner
+     *
+     * @ORM\Column(name="website_owner", type="smallint")
+     */
+    private $website_owner;
+    
+    /**
+     * Holds the user to website allocation for this website.
+     *
+     * @ORM\ManyToOne(targetEntity="Website")
+     * @var ArrayCollection
+     */
+    private $websites;
+    
+    /**
+     * Holds the user to website allocation for this website.
+     *
+     * @ORM\ManyToOne(targetEntity="Mh\UserBundle\Entity\User")
+     * @var ArrayCollection
+     */
+    private $users;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set website_owner
+     *
+     * @param integer $websiteOwner
+     * @return WebsiteAllocation
+     */
+    public function setWebsiteOwner($websiteOwner)
+    {
+        $this->website_owner = $websiteOwner;
+    
+        return $this;
+    }
+
+    /**
+     * Get website_owner
+     *
+     * @return integer 
+     */
+    public function getWebsiteOwner()
+    {
+        return $this->website_owner;
+    }
+}
