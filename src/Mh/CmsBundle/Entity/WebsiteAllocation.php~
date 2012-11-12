@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Mh\CmsBundle\Entity\WebsiteAllocation
  *
- * @ORM\Table()
+ * @ORM\Table(name="website_allocation")
  * @ORM\Entity
  */
 class WebsiteAllocation
@@ -22,16 +22,24 @@ class WebsiteAllocation
     private $id;
 
     /**
-     * @var integer $website_owner
+     * @var integer $allocation_owner
      *
-     * @ORM\Column(name="website_owner", type="smallint")
+     * @ORM\Column(name="allocation_owner", type="smallint")
      */
-    private $website_owner;
+    private $allocation_owner;
+    
+    /**
+     * @var integer $allocation_current
+     *
+     * @ORM\Column(name="allocation_current", type="smallint")
+     */
+    private $allocation_current;
     
     /**
      * Holds the user to website allocation for this website.
      *
      * @ORM\ManyToOne(targetEntity="Website")
+     * 
      * @var ArrayCollection
      */
     private $websites;
@@ -43,38 +51,4 @@ class WebsiteAllocation
      * @var ArrayCollection
      */
     private $users;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set website_owner
-     *
-     * @param integer $websiteOwner
-     * @return WebsiteAllocation
-     */
-    public function setWebsiteOwner($websiteOwner)
-    {
-        $this->website_owner = $websiteOwner;
-    
-        return $this;
-    }
-
-    /**
-     * Get website_owner
-     *
-     * @return integer 
-     */
-    public function getWebsiteOwner()
-    {
-        return $this->website_owner;
-    }
 }

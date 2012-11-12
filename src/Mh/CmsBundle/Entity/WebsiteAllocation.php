@@ -29,12 +29,20 @@ class WebsiteAllocation
     private $allocation_owner;
     
     /**
+     * @var integer $allocation_current
+     *
+     * @ORM\Column(name="allocation_current", type="smallint")
+     */
+    private $allocation_current;
+    
+    /**
      * Holds the user to website allocation for this website.
      *
      * @ORM\ManyToOne(targetEntity="Website")
+     * 
      * @var ArrayCollection
      */
-    private $websites;
+    private $website;
     
     /**
      * Holds the user to website allocation for this website.
@@ -42,8 +50,7 @@ class WebsiteAllocation
      * @ORM\ManyToOne(targetEntity="Mh\UserBundle\Entity\User")
      * @var ArrayCollection
      */
-    private $users;
-
+    private $user;
 
     /**
      * Get id
@@ -56,26 +63,49 @@ class WebsiteAllocation
     }
 
     /**
-     * Set website_owner
+     * Set allocation_owner
      *
-     * @param integer $websiteOwner
+     * @param integer $allocationOwner
      * @return WebsiteAllocation
      */
-    public function setWebsiteOwner($websiteOwner)
+    public function setAllocationOwner($allocationOwner)
     {
-        $this->website_owner = $websiteOwner;
+        $this->allocation_owner = $allocationOwner;
     
         return $this;
     }
 
     /**
-     * Get website_owner
+     * Get allocation_owner
      *
      * @return integer 
      */
-    public function getWebsiteOwner()
+    public function getAllocationOwner()
     {
-        return $this->website_owner;
+        return $this->allocation_owner;
+    }
+
+    /**
+     * Set allocation_current
+     *
+     * @param integer $allocationCurrent
+     * @return WebsiteAllocation
+     */
+    public function setAllocationCurrent($allocationCurrent)
+    {
+        $this->allocation_current = $allocationCurrent;
+    
+        return $this;
+    }
+
+    /**
+     * Get allocation_current
+     *
+     * @return integer 
+     */
+    public function getAllocationCurrent()
+    {
+        return $this->allocation_current;
     }
 
     /**
@@ -84,9 +114,9 @@ class WebsiteAllocation
      * @param Mh\CmsBundle\Entity\Website $websites
      * @return WebsiteAllocation
      */
-    public function setWebsites(\Mh\CmsBundle\Entity\Website $websites = null)
+    public function setWebsite(\Mh\CmsBundle\Entity\Website $website = null)
     {
-        $this->websites = $websites;
+        $this->website = $website;
     
         return $this;
     }
@@ -96,9 +126,9 @@ class WebsiteAllocation
      *
      * @return Mh\CmsBundle\Entity\Website 
      */
-    public function getWebsites()
+    public function getWebsite()
     {
-        return $this->websites;
+        return $this->website;
     }
 
     /**
@@ -107,20 +137,30 @@ class WebsiteAllocation
      * @param Mh\UserBundle\Entity\User $users
      * @return WebsiteAllocation
      */
-    public function setUsers(\Mh\UserBundle\Entity\User $users = null)
+    public function setUser(\Mh\UserBundle\Entity\User $user = null)
     {
-        $this->users = $users;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Get users
+     * Get user
      *
      * @return Mh\UserBundle\Entity\User 
      */
-    public function getUsers()
+    public function getUser()
     {
-        return $this->users;
+        return $this->user;
+    }
+    
+    public function isCurrent()
+    {
+    	return $this->getAllocationCurrent();
+    }
+    
+    public function isOwner()
+    {
+    	return $this->getAllocationOwner();
     }
 }

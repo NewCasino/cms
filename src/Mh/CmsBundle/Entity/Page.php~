@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Mh\CmsBundle\Entity\Page
  *
- * @ORM\Table()
+ * @ORM\Table(name="pages")
  * @ORM\Entity
  */
 class Page
@@ -64,10 +64,16 @@ class Page
      */
     private $website;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="ContentBlock", mappedBy="pages")
+     * @var ArrayCollection
+     */
+    private $content_blocks;
+    
     
     public function __construct()
     {
-    	$this->website = new ArrayCollection;
+    	$this->content_blocks = new ArrayCollection;
     }
     
     /**
@@ -216,5 +222,38 @@ class Page
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    /**
+     * Add content_blocks
+     *
+     * @param Mh\CmsBundle\Entity\ContentBlock $contentBlocks
+     * @return Page
+     */
+    public function addContentBlock(\Mh\CmsBundle\Entity\ContentBlock $contentBlocks)
+    {
+        $this->content_blocks[] = $contentBlocks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove content_blocks
+     *
+     * @param Mh\CmsBundle\Entity\ContentBlock $contentBlocks
+     */
+    public function removeContentBlock(\Mh\CmsBundle\Entity\ContentBlock $contentBlocks)
+    {
+        $this->content_blocks->removeElement($contentBlocks);
+    }
+
+    /**
+     * Get content_blocks
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getContentBlocks()
+    {
+        return $this->content_blocks;
     }
 }

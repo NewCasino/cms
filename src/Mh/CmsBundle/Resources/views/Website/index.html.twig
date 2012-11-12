@@ -1,43 +1,47 @@
-<h1>Website list</h1>
+{% extends '::base.html.twig' %}
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Website_name</th>
-            <th>Website_created_at</th>
-            <th>Website_renewal_date</th>
-            <th>Website_active</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('websites_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.websitename }}</td>
-            <td>{{ entity.websitecreatedat }}</td>
-            <td>{{ entity.websiterenewaldate }}</td>
-            <td>{{ entity.websiteactive }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('websites_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('websites_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('websites_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% block body %}
+	<h1>Website list</h1>
+	
+	<table class="records_list">
+	    <thead>
+	        <tr>
+	            <th>Id</th>
+	            <th>Website_name</th>
+	            <th>Website_created_at</th>
+	            <th>Website_renewal_date</th>
+	            <th>Website_active</th>
+	            <th>Actions</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	    {% for entity in entities %}
+	        <tr>
+	            <td><a href="{{ path('websites_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+	            <td>{{ entity.websitename }}</td>
+	            <td>{{ entity.websitecreatedat }}</td>
+	            <td>{{ entity.websiterenewaldate }}</td>
+	            <td>{{ entity.websiteactive }}</td>
+	            <td>
+	                <ul>
+	                    <li>
+	                        <a href="{{ path('websites_show', { 'id': entity.id }) }}">show</a>
+	                    </li>
+	                    <li>
+	                        <a href="{{ path('websites_edit', { 'id': entity.id }) }}">edit</a>
+	                    </li>
+	                </ul>
+	            </td>
+	        </tr>
+	    {% endfor %}
+	    </tbody>
+	</table>
+	
+	<ul>
+	    <li>
+	        <a href="{{ path('websites_new') }}">
+	            Create a new entry
+	        </a>
+	    </li>
+	</ul>
+{% endblock %}

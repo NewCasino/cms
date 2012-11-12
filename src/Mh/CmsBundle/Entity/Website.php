@@ -61,18 +61,19 @@ class Website
     /**
      * Holds the user to website allocation for this website.
      *
-     * @ORM\OneToMany(targetEntity="WebsiteAllocation", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="WebsiteAllocation", mappedBy="website")
      * @var ArrayCollection
      */
-    private $user_allocation;
-
+    private $allocation;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->allocation = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
-	public function __construct()
-	{
-		$this->pages = new ArrayCollection;
-		$this->user_allocation = new ArrayCollection;
-	}
-	
     /**
      * Get id
      *
@@ -209,35 +210,35 @@ class Website
     }
 
     /**
-     * Add user_allocation
+     * Add allocation
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $userAllocation
+     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
      * @return Website
      */
-    public function addUserAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $userAllocation)
+    public function addAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
     {
-        $this->user_allocation[] = $userAllocation;
+        $this->allocation[] = $allocation;
     
         return $this;
     }
 
     /**
-     * Remove user_allocation
+     * Remove allocation
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $userAllocation
+     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
      */
-    public function removeUserAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $userAllocation)
+    public function removeAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
     {
-        $this->user_allocation->removeElement($userAllocation);
+        $this->allocation->removeElement($allocation);
     }
 
     /**
-     * Get user_allocation
+     * Get allocation
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getUserAllocation()
+    public function getAllocation()
     {
-        return $this->user_allocation;
+        return $this->allocation;
     }
 }

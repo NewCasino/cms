@@ -4,6 +4,7 @@ namespace Mh\CmsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 use Mh\CmsBundle\Entity\Website;
 use Mh\CmsBundle\Form\WebsiteType;
@@ -14,12 +15,19 @@ use Mh\CmsBundle\Form\WebsiteType;
  */
 class WebsiteController extends Controller
 {
+	public function unallocatedAction()
+	{
+		return new Response("No allocated websites.");
+	}
+	
     /**
      * Lists all Website entities.
      *
      */
     public function indexAction()
     {
+    	$allocation = $this->container->get("website_allocation_handler");
+    	   	
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MhCmsBundle:Website')->findAll();

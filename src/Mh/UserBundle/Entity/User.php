@@ -4,6 +4,7 @@ namespace Mh\UserBundle\Entity;
 
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -21,17 +22,18 @@ class User extends BaseUser
     /**
      * Holds the user to website allocation for this website.
      *
-     * @ORM\OneToMany(targetEntity="Mh\CmsBundle\Entity\WebsiteAllocation", mappedBy="websites")
+     * @ORM\OneToMany(targetEntity="Mh\CmsBundle\Entity\WebsiteAllocation", mappedBy="user", cascade="persist")
      * @var ArrayCollection
      */
-    private $website_allocation;
-
+    private $allocation;
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        parent::__construct();
-        // your own logic
+        $this->allocation = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Get id
      *
@@ -43,35 +45,37 @@ class User extends BaseUser
     }
 
     /**
-     * Add websites
+     * Add allocation
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $websites
+     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
      * @return User
      */
-    public function addWebsite(\Mh\CmsBundle\Entity\WebsiteAllocation $websites)
+    public function addAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
     {
-        $this->websites[] = $websites;
+    	$allocation->setUser($this);
+    	
+        $this->allocation[] = $allocation;
     
         return $this;
     }
 
     /**
-     * Remove websites
+     * Remove allocation
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $websites
+     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
      */
-    public function removeWebsite(\Mh\CmsBundle\Entity\WebsiteAllocation $websites)
+    public function removeAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
     {
-        $this->websites->removeElement($websites);
+        $this->allocation->removeElement($allocation);
     }
 
     /**
-     * Get websites
+     * Get allocation
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getWebsites()
+    public function getAllocation()
     {
-        return $this->websites;
+        return $this->allocation;
     }
 }

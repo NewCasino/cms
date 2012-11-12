@@ -10,14 +10,14 @@ MhCmsBundle_pages:
     resource: "@MhCmsBundle/Resources/config/routing/page.yml"
     prefix:   /pages
     
-MhCmsBundle_content-blocks:
+MhCmsBundle_content_blocks:
     resource: "@MhCmsBundle/Resources/config/routing/contentblock.yml"
-    prefix:   /content-blocks
+    prefix:   /content_blocks
     
-MhCmsBundle_content-block-types:
+MhCmsBundle_content_block_types:
     resource: "@MhCmsBundle/Resources/config/routing/contentblocktype.yml"
-    prefix:   /content-block-types
+    prefix:   /content_block_types
     
-MhCmsBundle_content-block-templates:
+MhCmsBundle_content_block_templates:
     resource: "@MhCmsBundle/Resources/config/routing/contentblocktemplate.yml"
-    prefix:   /content-block-templates
+    prefix:   /content_block_templates

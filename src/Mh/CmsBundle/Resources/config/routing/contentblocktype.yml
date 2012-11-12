@@ -1,30 +1,30 @@
-content-block-types:
+content_block_types:
     pattern:  /
     defaults: { _controller: "MhCmsBundle:ContentBlockType:index" }
 
-content-block-types_show:
+content_block_types_show:
     pattern:  /{id}/show
     defaults: { _controller: "MhCmsBundle:ContentBlockType:show" }
 
-content-block-types_new:
+content_block_types_new:
     pattern:  /new
     defaults: { _controller: "MhCmsBundle:ContentBlockType:new" }
 
-content-block-types_create:
+content_block_types_create:
     pattern:  /create
     defaults: { _controller: "MhCmsBundle:ContentBlockType:create" }
     requirements: { _method: post }
 
-content-block-types_edit:
+content_block_types_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "MhCmsBundle:ContentBlockType:edit" }
 
-content-block-types_update:
+content_block_types_update:
     pattern:  /{id}/update
     defaults: { _controller: "MhCmsBundle:ContentBlockType:update" }
     requirements: { _method: post }
 
-content-block-types_delete:
+content_block_types_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "MhCmsBundle:ContentBlockType:delete" }
     requirements: { _method: post }

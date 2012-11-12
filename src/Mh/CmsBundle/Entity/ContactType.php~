@@ -27,6 +27,8 @@ class ContactType
      * @ORM\Column(name="contact_type_name", type="string", length=15)
      */
     private $contact_type_name;
+    
+    
 
 
     /**

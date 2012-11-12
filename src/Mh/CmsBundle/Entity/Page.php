@@ -223,4 +223,37 @@ class Page
     {
         return $this->website;
     }
+
+    /**
+     * Add content_blocks
+     *
+     * @param Mh\CmsBundle\Entity\ContentBlock $contentBlocks
+     * @return Page
+     */
+    public function addContentBlock(\Mh\CmsBundle\Entity\ContentBlock $contentBlocks)
+    {
+        $this->content_blocks[] = $contentBlocks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove content_blocks
+     *
+     * @param Mh\CmsBundle\Entity\ContentBlock $contentBlocks
+     */
+    public function removeContentBlock(\Mh\CmsBundle\Entity\ContentBlock $contentBlocks)
+    {
+        $this->content_blocks->removeElement($contentBlocks);
+    }
+
+    /**
+     * Get content_blocks
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getContentBlocks()
+    {
+        return $this->content_blocks;
+    }
 }
