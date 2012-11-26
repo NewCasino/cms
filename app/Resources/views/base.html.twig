@@ -45,6 +45,7 @@
 		<div id="content">
 			<div id="content-header">
 				<h1>{% block title %}{% endblock %}</h1>
+
 				<div class="btn-group">
 					<a class="btn btn-large tip-bottom" title="Create a new page"><i class="icon-file"></i></a>
 					<a href="{{ path("mh_user_list") }}" class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i></a>
@@ -54,6 +55,23 @@
 			</div><!-- content-header -->
 			<div class="container-fluid">
 				<div class="row-fluid">
+                    {% for flashMessage in app.session.flashbag.get('error') %}
+                        <div class="alert alert-error">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                        
+                    {% for flashMessage in app.session.flashbag.get('notice') %}
+                        <div class="alert">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                        
+                    {% for flashMessage in app.session.flashbag.get('feedback') %}
+                        <div class="alert alert-success">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
 					{% block body %}{% endblock %}
 				</div><!-- row-fluid -->
 				<div class="row-fluid">
@@ -67,4 +85,7 @@
 	
 	<script type="text/javascript" src="/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/application.js"></script>
+    
+    {% block js %}{% endblock %}
 </html>

@@ -1,0 +1,12 @@
+<div class="modal hide fade" id="{% block modal_id %}{% endblock %}">
+    <div class="modal-header">
+        <h3>{% block modal_title %}{% endblock %}</h3>
+    </div><!-- modal-header -->
+    <div class="modal-body">
+        {% block modal_body %}{% endblock %}
+    </div><!-- modal-body -->
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" id="{% block modal_submit_id %}{% endblock %}" class="btn btn-primary">Save</a>
+    </div><!-- modal-footer -->
+</div><!-- modal -->

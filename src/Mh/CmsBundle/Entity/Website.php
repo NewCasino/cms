@@ -64,16 +64,36 @@ class Website
      * @ORM\OneToMany(targetEntity="WebsiteAllocation", mappedBy="website")
      * @var ArrayCollection
      */
-    private $allocation;
+    //private $allocation;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Mh\UserBundle\Entity\User", inversedBy="websites");
+     * 
+     * @var ArrayCollection 
+     */
+    private $users;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Mh\UserBundle\Entity\User", mappedBy="active_website")
+     * @var ArrayCollection 
+     */
+    private $active_users;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->allocation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->active_users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+    public function __toString() 
+    {
+        return $this->getWebsiteName();
+    }
+
     /**
      * Get id
      *
@@ -179,7 +199,7 @@ class Website
     /**
      * Add pages
      *
-     * @param Mh\CmsBundle\Entity\Page $pages
+     * @param \Mh\CmsBundle\Entity\Page $pages
      * @return Website
      */
     public function addPage(\Mh\CmsBundle\Entity\Page $pages)
@@ -192,7 +212,7 @@ class Website
     /**
      * Remove pages
      *
-     * @param Mh\CmsBundle\Entity\Page $pages
+     * @param \Mh\CmsBundle\Entity\Page $pages
      */
     public function removePage(\Mh\CmsBundle\Entity\Page $pages)
     {
@@ -202,7 +222,7 @@ class Website
     /**
      * Get pages
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPages()
     {
@@ -210,35 +230,68 @@ class Website
     }
 
     /**
-     * Add allocation
+     * Add users
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
+     * @param \Mh\UserBundle\Entity\User $users
      * @return Website
      */
-    public function addAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
+    public function addUser(\Mh\UserBundle\Entity\User $users)
     {
-        $this->allocation[] = $allocation;
+        $this->users[] = $users;
     
         return $this;
     }
 
     /**
-     * Remove allocation
+     * Remove users
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
+     * @param \Mh\UserBundle\Entity\User $users
      */
-    public function removeAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
+    public function removeUser(\Mh\UserBundle\Entity\User $users)
     {
-        $this->allocation->removeElement($allocation);
+        $this->users->removeElement($users);
     }
 
     /**
-     * Get allocation
+     * Get users
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAllocation()
+    public function getUsers()
     {
-        return $this->allocation;
+        return $this->users;
+    }
+
+    /**
+     * Add active_users
+     *
+     * @param \Mh\UserBundle\Entity\User $activeUsers
+     * @return Website
+     */
+    public function addActiveUser(\Mh\UserBundle\Entity\User $activeUsers)
+    {
+        $this->active_users[] = $activeUsers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove active_users
+     *
+     * @param \Mh\UserBundle\Entity\User $activeUsers
+     */
+    public function removeActiveUser(\Mh\UserBundle\Entity\User $activeUsers)
+    {
+        $this->active_users->removeElement($activeUsers);
+    }
+
+    /**
+     * Get active_users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActiveUsers()
+    {
+        return $this->active_users;
     }
 }

@@ -19,21 +19,43 @@ class WebsiteController extends Controller
 	{
 		return new Response("No allocated websites.");
 	}
-	
+    
+    /**
+     * Sets the active website for the current authed user.
+     * 
+     * @param int $id
+     */
+    public function setActiveAction($id)
+    {
+        try {
+            $handler = $this->get("website_allocation_handler");
+            $website = $handler->setActiveSite($id);
+            
+            $this->get("session")->getFlashBag()->add(
+                "feedback", "You're now managing " . $website->getWebsiteName()
+            );
+        } catch (\Mh\CmsBundle\Classes\Website\AllocationException $e) {
+            $this->get("session")->getFlashBag()->add("error", $e->getMessage());
+        }
+        
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $rtn = new Response("<p>You are currently managing this site.</p>");
+        } else {
+            $rtn = $this->redirect($this->generateUrl("websites"));
+        }
+        
+        return $rtn;
+    }
+
+
     /**
      * Lists all Website entities.
      *
      */
     public function indexAction()
-    {
-    	$allocation = $this->container->get("website_allocation_handler");
-    	   	
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('MhCmsBundle:Website')->findAll();
-
+    {    	   	
         return $this->render('MhCmsBundle:Website:index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $this->getUser()->getWebsites(),
         ));
     }
 

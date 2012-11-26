@@ -2,6 +2,7 @@
 
 namespace Mh\CmsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,6 +16,7 @@ class Page
     /**
      * @var integer $id
      *
+     * @ORM\OneToMany(targetEntity="Page", mappedBy="page_parent")
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -63,6 +65,14 @@ class Page
      * @var ArrayCollection
      */
     private $website;
+    
+    /**
+     * Holds an instance of the page parent.
+     * 
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="id")
+     * @var self 
+     */
+    private $page_parent;
     
     /**
      * @ORM\ManyToMany(targetEntity="ContentBlock", mappedBy="pages")
@@ -255,5 +265,28 @@ class Page
     public function getContentBlocks()
     {
         return $this->content_blocks;
+    }
+
+    /**
+     * Set page_parent
+     *
+     * @param \Mh\CmsBundle\Entity\Page $pageParent
+     * @return Page
+     */
+    public function setPageParent(\Mh\CmsBundle\Entity\Page $pageParent = null)
+    {
+        $this->page_parent = $pageParent;
+    
+        return $this;
+    }
+
+    /**
+     * Get page_parent
+     *
+     * @return \Mh\CmsBundle\Entity\Page 
+     */
+    public function getPageParent()
+    {
+        return $this->page_parent;
     }
 }

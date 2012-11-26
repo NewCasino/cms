@@ -9,3 +9,7 @@ services:
   website_allocation_handler:
       class: Mh\CmsBundle\Classes\Website\AllocationHandler
       arguments: [@security.context, @doctrine.orm.entity_manager]
+      
+  mh.page.handler:
+      class: Mh\CmsBundle\Classes\Page\Handler
+      arguments: [@security.context, @doctrine.orm.entity_manager]

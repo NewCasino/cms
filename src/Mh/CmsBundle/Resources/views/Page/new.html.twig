@@ -1,16 +1,38 @@
-<h1>Page creation</h1>
+{#{% extends '::base.html.twig' %}
 
-<form action="{{ path('pages_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+{% block title %}Page Manager{% endblock %}
+
+{% block body %}
+
+    <h1>New Page</h1>
+
+    <form action="{{ path('pages_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('pages') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+{% endblock %}#}
+
+{% extends "MhCmsBundle:Default:modal.html.twig" %}
+{% block modal_title %}New Page{% endblock %}
+{% block modal_id %}page-new{% endblock %}
+{% block modal_body %}
     <p>
-        <button type="submit">Create</button>
+        Enter the name and max children of your new page. The max children 
+        field will limit how many sub pages this page can have.
     </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('pages') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    
+    <form id="form-page-create" action="{{ path('pages_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+    </form>
+{% endblock %}
+{% block modal_submit_id %}btn-page-create{% endblock %}

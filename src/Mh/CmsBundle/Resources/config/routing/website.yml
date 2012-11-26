@@ -28,3 +28,7 @@ websites_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "MhCmsBundle:Website:delete" }
     requirements: { _method: post }
+
+websites_set_active_site:
+    pattern: /{id}/set_active
+    defaults: {_controller: "MhCmsBundle:Website:setActive"}

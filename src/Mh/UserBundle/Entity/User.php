@@ -25,15 +25,31 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Mh\CmsBundle\Entity\WebsiteAllocation", mappedBy="user", cascade="persist")
      * @var ArrayCollection
      */
-    private $allocation;
+    //private $allocation;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Mh\CmsBundle\Entity\Website", mappedBy="users")
+     * @var ArrayCollection 
+     */
+    private $websites;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Mh\CmsBundle\Entity\Website")
+     * @var type 
+     */
+    private $active_website;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->allocation = new \Doctrine\Common\Collections\ArrayCollection();
+        parent::__construct();
+        
+        //$this->allocation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->websites = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -45,37 +61,58 @@ class User extends BaseUser
     }
 
     /**
-     * Add allocation
+     * Add websites
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
+     * @param \Mh\CmsBundle\Entity\Website $websites
      * @return User
      */
-    public function addAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
+    public function addWebsite(\Mh\CmsBundle\Entity\Website $websites)
     {
-    	$allocation->setUser($this);
-    	
-        $this->allocation[] = $allocation;
+        $this->websites[] = $websites;
     
         return $this;
     }
 
     /**
-     * Remove allocation
+     * Remove websites
      *
-     * @param Mh\CmsBundle\Entity\WebsiteAllocation $allocation
+     * @param \Mh\CmsBundle\Entity\Website $websites
      */
-    public function removeAllocation(\Mh\CmsBundle\Entity\WebsiteAllocation $allocation)
+    public function removeWebsite(\Mh\CmsBundle\Entity\Website $websites)
     {
-        $this->allocation->removeElement($allocation);
+        $this->websites->removeElement($websites);
     }
 
     /**
-     * Get allocation
+     * Get websites
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAllocation()
+    public function getWebsites()
     {
-        return $this->allocation;
+        return $this->websites;
+    }
+
+    /**
+     * Set active_website
+     *
+     * @param \Mh\CmsBundle\Entity\Website $activeWebsite
+     * @return User
+     */
+    public function setActiveWebsite(\Mh\CmsBundle\Entity\Website $activeWebsite = null)
+    {
+        $this->active_website = $activeWebsite;
+    
+        return $this;
+    }
+
+    /**
+     * Get active_website
+     *
+     * @return \Mh\CmsBundle\Entity\Website 
+     */
+    public function getActiveWebsite()
+    {
+        return $this->active_website;
     }
 }

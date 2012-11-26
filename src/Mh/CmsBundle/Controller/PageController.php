@@ -23,9 +23,15 @@ class PageController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MhCmsBundle:Page')->findAll();
+        
+        // We need to provide a new form for the modal to use.
+        $entity = new Page();
+        $form   = $this->createForm(new PageType(), $entity);
 
         return $this->render('MhCmsBundle:Page:index.html.twig', array(
             'entities' => $entities,
+            'entity' => $entity,
+            'form'   => $form->createView(),
         ));
     }
 
@@ -49,6 +55,11 @@ class PageController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
+    
+    private function createPageFromRequest(Request $request)
+    {
+        var_dump($this->getRequest()->request->all());die;
+    }
 
     /**
      * Displays a form to create a new Page entity.
@@ -71,6 +82,8 @@ class PageController extends Controller
      */
     public function createAction(Request $request)
     {
+        $this->createPageFromRequest($this->getRequest());
+        
         $entity  = new Page();
         $form = $this->createForm(new PageType(), $entity);
         $form->bind($request);

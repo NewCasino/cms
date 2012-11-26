@@ -12,12 +12,7 @@ class PageType extends AbstractType
     {
         $builder
             ->add('page_name')
-            ->add('page_create_at')
-            ->add('page_updated_at')
-            ->add('page_uri')
             ->add('page_max_children')
-            ->add('website')
-            ->add('content_blocks')
         ;
     }
 
@@ -30,6 +25,6 @@ class PageType extends AbstractType
 
     public function getName()
     {
-        return 'mh_cmsbundle_pagetype';
+        return 'page';
     }
 }

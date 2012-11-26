@@ -1,49 +1,55 @@
-<h1>Page</h1>
+{% extends '::base.html.twig' %}
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Page_name</th>
-            <td>{{ entity.pagename }}</td>
-        </tr>
-        <tr>
-            <th>Page_create_at</th>
-            <td>{{ entity.pagecreateat }}</td>
-        </tr>
-        <tr>
-            <th>Page_updated_at</th>
-            <td>{{ entity.pageupdatedat }}</td>
-        </tr>
-        <tr>
-            <th>Page_uri</th>
-            <td>{{ entity.pageuri }}</td>
-        </tr>
-        <tr>
-            <th>Page_max_children</th>
-            <td>{{ entity.pagemaxchildren }}</td>
-        </tr>
-    </tbody>
-</table>
+{% block title %}Page Manager{% endblock %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('pages') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('pages_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('pages_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% block body %}
+    <h1>Page</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Page_name</th>
+                <td>{{ entity.pagename }}</td>
+            </tr>
+            <tr>
+                <th>Page_create_at</th>
+                <td>{{ entity.pagecreateat }}</td>
+            </tr>
+            <tr>
+                <th>Page_updated_at</th>
+                <td>{{ entity.pageupdatedat }}</td>
+            </tr>
+            <tr>
+                <th>Page_uri</th>
+                <td>{{ entity.pageuri }}</td>
+            </tr>
+            <tr>
+                <th>Page_max_children</th>
+                <td>{{ entity.pagemaxchildren }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('pages') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pages_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('pages_delete', { 'id': entity.id }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+{% endblock %}
