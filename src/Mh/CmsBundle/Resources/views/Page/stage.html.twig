@@ -1,0 +1,23 @@
+{% extends "MhCmsBundle:Page:html5.html.twig" %}
+
+{% block html_title %}
+{{ stage.page.pagename }} | {{ stage.page.website.websitename }}
+{% endblock %}
+
+{% block body %}
+    {% for content in stage.page.contentblocks %}
+        {% include content.contentblocktype.contentblocktemplate.templateincludepath %}
+    {% endfor %}
+    
+    {% include "MhCmsBundle:Page:add_block.html.twig" %}
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/application.js"></script>
+    <script src="/js/pages.js"></script>
+    
+    <script>
+        page = new Mh.app.pages();
+        page.attachEventListeners("stage");
+    </script>
+{% endblock %}

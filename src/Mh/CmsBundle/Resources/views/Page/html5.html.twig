@@ -1,0 +1,18 @@
+<!doctype html>
+
+<html>
+
+    <head>
+        <title>{% block html_title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" /> 
+    </head>
+    
+    <body>
+        {% if mode == "build" %}
+            {% include "MhCmsBundle:Page:block_menu.html.twig" %}
+        {% endif %}
+            
+        {% block body %}{% endblock %}
+    </body>
+
+</html>

@@ -1,0 +1,34 @@
+{% extends "MhCmsBundle:Default:modal.html.twig" %}
+{% block modal_title %}Add Content Block{% endblock %}
+{% block modal_id %}page-add-block{% endblock %}
+{% block modal_body %}
+    <p>
+        Use the form below to add content blocks
+    </p>
+    
+    <form id="form-add-block" class="form form-inline" 
+          action="{{ path('pages_add_block', {pageId : stage.page.id}) }}"
+          method="post">
+        <label for="content_block_content_block_type">
+            <select name="content_block[content_block_type]" id="content_block_content_block_type">
+                {% for type in stage.contentBlockTypes %}
+                    <option value="{{ type.id }}">
+                        {{ type.contentblocktypename }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+        
+        <input type="text" 
+               id="content_block_content_block_content" 
+               name="content_block[content]"
+               value="New block" />
+        
+        <input type="hidden" 
+               id="content_block_parent" 
+               name="content_block[parent]"
+               value="" />
+                
+    </form>
+{% endblock %}
+{% block modal_submit_id %}btn-add-block{% endblock %}

@@ -47,10 +47,23 @@ class ContentBlock
      * @var ArrayCollection
      */
     private $pages;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ContentBlock", mappedBy="parent")
+     * @var self
+     */
+    private $children;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="ContentBlock")
+     * @var self
+     */
+    private $parent;
 
     public function __construct()
     {
     	$this->pages = new ArrayCollection;
+        $this->children = new ArrayCollection;
     }
 
     /**

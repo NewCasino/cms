@@ -26,7 +26,9 @@ class PageController extends Controller
         
         // We need to provide a new form for the modal to use.
         $entity = new Page();
-        $form   = $this->createForm(new PageType(), $entity);
+        $form   = $this->createForm(
+            new PageType($this->get("mh.page.handler")), $entity
+        );
 
         return $this->render('MhCmsBundle:Page:index.html.twig', array(
             'entities' => $entities,
@@ -58,7 +60,40 @@ class PageController extends Controller
     
     private function createPageFromRequest(Request $request)
     {
-        var_dump($this->getRequest()->request->all());die;
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $data = $this->getRequest()->request->all();
+        $name = $data["page"]["page_name"];
+        $maxChildren = $data["page"]["page_max_children"];
+        $parent = $data["page"]["page_parent"];
+        
+        if ($parent) {
+            $parent = $em->getRepository("MhCmsBundle:Page")->find($parent);
+        } else {
+            $parent = null;
+        }
+                
+        try {
+            $handler = $this->get("mh.page.handler");
+            return $handler->createPage($name, $maxChildren, $parent);
+        } catch (Mh\CmsBundle\Classes\Page\PageCreationFailedExeption $e) {
+            $this->get("session")->getFlashBag()->add("error", $e->getMessage());
+        }
+    }
+    
+    /**
+     * Provides a means to display a page in a staging environment.
+     * 
+     * @param integer $pageId
+     */
+    public function stageAction($pageId)
+    {
+        $vars = array(
+            "stage" => $this->get("mh.page.stager"), 
+            "mode" => "build"
+        );
+                
+        return $this->render("MhCmsBundle:Page:stage.html.twig", $vars);
     }
 
     /**
@@ -68,7 +103,9 @@ class PageController extends Controller
     public function newAction()
     {
         $entity = new Page();
-        $form   = $this->createForm(new PageType(), $entity);
+        $form   = $this->createForm(
+            new PageType($this->get("mh.page.handler")), $entity
+        );
 
         return $this->render('MhCmsBundle:Page:new.html.twig', array(
             'entity' => $entity,
@@ -82,24 +119,11 @@ class PageController extends Controller
      */
     public function createAction(Request $request)
     {
-        $this->createPageFromRequest($this->getRequest());
-        
-        $entity  = new Page();
-        $form = $this->createForm(new PageType(), $entity);
-        $form->bind($request);
+        $page = $this->createPageFromRequest($this->getRequest());
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('pages_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('MhCmsBundle:Page:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $this->redirect(
+            $this->generateUrl('pages_show', array('id' => $page->getId()))
+        );
     }
 
     /**
@@ -116,7 +140,9 @@ class PageController extends Controller
             throw $this->createNotFoundException('Unable to find Page entity.');
         }
 
-        $editForm = $this->createForm(new PageType(), $entity);
+        $editForm = $this->createForm(
+            new PageType($this->get("mh.page.handler")), $entity
+        );
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('MhCmsBundle:Page:edit.html.twig', array(
@@ -141,7 +167,7 @@ class PageController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PageType(), $entity);
+        $editForm = $this->createForm(new PageType($this->get("mh.page.handler")), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
@@ -188,5 +214,38 @@ class PageController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    public function removeSubBlockAction()
+    {
+        $builder = $this->get("mh.page.builder");
+        //$range = range(9, 15);
+        
+        //foreach ($range as $int) {
+            $builder->removeSubBlock(17);
+        //}
+        die("work this through");
+    }
+
+
+    public function addBlockAction($pageId)
+    {
+        $data = $this->getRequest()->request->get("content_block");
+        
+        try {
+            $builder = $this->get("mh.page.builder");
+            $block = $builder->addSubBlock($data);
+        } catch (PageNotFoundException $e) {
+            die("add a proper error here.");
+        }
+        
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $path = $block->getContentBlockType()->getContentBlockTemplate()->getTemplateIncludePath();
+            return $this->render($path, array("content" => $block));
+        }
+        
+        return $this->redirect($this->generateUrl(
+            "pages_stage", array("pageId" => $pageId)
+        ));
     }
 }

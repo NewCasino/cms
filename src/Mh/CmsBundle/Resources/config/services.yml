@@ -12,4 +12,12 @@ services:
       
   mh.page.handler:
       class: Mh\CmsBundle\Classes\Page\Handler
-      arguments: [@security.context, @doctrine.orm.entity_manager]
+      arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]
+      
+  mh.page.stager:
+      class: Mh\CmsBundle\Classes\Page\Stager
+      arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]
+      
+  mh.page.builder:
+      class: Mh\CmsBundle\Classes\Page\Builder
+      arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]

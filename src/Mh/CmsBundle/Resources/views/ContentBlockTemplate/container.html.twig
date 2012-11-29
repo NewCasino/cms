@@ -1,0 +1,5 @@
+<div class="container addable" data-block="{{ content.id }}">
+    {% for child in content.children %}
+        {% include child.contentblocktype.contentblocktemplate.templateincludepath with {content : child} %}
+    {% endfor %}
+</div><!-- container -->

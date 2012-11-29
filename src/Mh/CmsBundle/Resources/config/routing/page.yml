@@ -18,6 +18,10 @@ pages_create:
 pages_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "MhCmsBundle:Page:edit" }
+    
+pages_stage:
+    pattern:  /{pageId}/stage
+    defaults: { _controller: "MhCmsBundle:Page:stage" }
 
 pages_update:
     pattern:  /{id}/update
@@ -28,3 +32,11 @@ pages_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "MhCmsBundle:Page:delete" }
     requirements: { _method: post }
+
+pages_add_block:
+    pattern: /{pageId}/add_block
+    defaults: { _controller: "MhCmsBundle:Page:addBlock" }
+    
+pages_remove_sub_block:
+    pattern: /{pageId}/remove_sub_block
+    defaults: { _controller: "MhCmsBundle:Page:removeSubBlock" }

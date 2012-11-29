@@ -1,0 +1,3 @@
+[submodule "web/js/plugins/jquery/tmpl"]
+	path = web/js/plugins/jquery/tmpl
+	url = git://github.com/jquery/jquery-tmpl.git

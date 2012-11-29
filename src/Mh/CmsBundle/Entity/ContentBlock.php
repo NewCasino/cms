@@ -47,10 +47,23 @@ class ContentBlock
      * @var ArrayCollection
      */
     private $pages;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ContentBlock", mappedBy="parent")
+     * @var self
+     */
+    private $children;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="ContentBlock")
+     * @var self
+     */
+    private $parent;
 
     public function __construct()
     {
     	$this->pages = new ArrayCollection;
+        $this->children = new ArrayCollection;
     }
 
     /**
@@ -163,5 +176,61 @@ class ContentBlock
     public function getPages()
     {
         return $this->pages;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Mh\CmsBundle\Entity\ContentBlock $children
+     * @return ContentBlock
+     */
+    public function addChildren(\Mh\CmsBundle\Entity\ContentBlock $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Mh\CmsBundle\Entity\ContentBlock $children
+     */
+    public function removeChildren(\Mh\CmsBundle\Entity\ContentBlock $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Mh\CmsBundle\Entity\ContentBlock $parent
+     * @return ContentBlock
+     */
+    public function setParent(\Mh\CmsBundle\Entity\ContentBlock $parent = null)
+    {
+        $this->parent = $parent;
+    
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Mh\CmsBundle\Entity\ContentBlock 
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

@@ -1,0 +1,16 @@
+/* 
+    Document   : page.stage
+    Created on : 28-Nov-2012, 19:01:06
+    Author     : Mike
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.addable:hover {
+    background: red;
+    cursor: pointer;
+}
+
+#builder-nav {
+    display: none;
+}

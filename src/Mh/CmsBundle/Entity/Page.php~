@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Mh\CmsBundle\Entity\Page
  *
  * @ORM\Table(name="pages")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity
  */
 class Page
@@ -83,7 +84,19 @@ class Page
     
     public function __construct()
     {
-    	$this->content_blocks = new ArrayCollection;
+    	$this->content_blocks = new ArrayCollection();
+        $this->page_revisions = new ArrayCollection();
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (!$this->getPageCreateAt())
+            $this->setPageCreateAt(time());
+        
+        $this->setPageUpdatedAt(time());
     }
     
     /**
@@ -265,5 +278,33 @@ class Page
     public function getContentBlocks()
     {
         return $this->content_blocks;
+    }
+
+    /**
+     * Set page_parent
+     *
+     * @param \Mh\CmsBundle\Entity\Page $pageParent
+     * @return Page
+     */
+    public function setPageParent(\Mh\CmsBundle\Entity\Page $pageParent = null)
+    {
+        $this->page_parent = $pageParent;
+    
+        return $this;
+    }
+
+    /**
+     * Get page_parent
+     *
+     * @return \Mh\CmsBundle\Entity\Page 
+     */
+    public function getPageParent()
+    {
+        return $this->page_parent;
+    }
+    
+    public function __toString() 
+    {
+        return $this->getPageName();
     }
 }
