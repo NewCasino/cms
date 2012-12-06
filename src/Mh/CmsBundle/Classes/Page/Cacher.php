@@ -84,7 +84,7 @@ class Cacher
 
     public function fetchContent()
     {
-        $url = "http://site_builder/cms/pages/" . $this->page->getId() . "/stage";
+        $url = "http://site_builder/cms/pages/" . $this->page->getId() . "/stage?mode=publish";
         $ch = curl_init();
         $timeout = 5;
         curl_setopt($ch, CURLOPT_URL, $url);

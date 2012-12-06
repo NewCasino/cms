@@ -81,7 +81,9 @@ class PageController extends Controller
 
         return $this->render('MhCmsBundle:Page:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView()
+            )
+        );
     }
 
     private function createPageFromRequest(Request $request)
@@ -114,10 +116,17 @@ class PageController extends Controller
      */
     public function stageAction($pageId)
     {
+        $mode = $this->getRequest()->get("mode");
+
         $vars = array(
             "stage" => $this->get("mh.page.stager"),
-            "mode" => "build"
+            "mode" => "build",
+            "publish" => false
         );
+
+        if ($mode === "publish") {
+            $vars["publish"] = true;
+        }
 
         return $this->render("MhCmsBundle:Page:stage.html.twig", $vars);
     }

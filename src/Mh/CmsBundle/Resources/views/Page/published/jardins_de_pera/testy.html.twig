@@ -38,35 +38,7 @@
 </div><!-- modal -->        
             <link rel="stylesheet" type="text/css" href="/css/page.stage.css" />
 
-    <div id="builder" class="container-fluid">
-        <div id="options">
-
-            <div class="dropdown">
-                <a href="#" role="menu"
-                   aria-labelledby="dropdownMenu"
-                   class="dropdown-toggle"
-                   data-toggle="dropdown">
-                    <i class="icon-wrench icon-white"></i>
-                </a>
-
-                <!-- Link or button to toggle dropdown -->
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li>
-                                                    <a tabindex="-1"
-                               href="/cms/pages/10/unpublish"
-                               id="btn-page-publish"
-                               data-id="10"
-                               class="publish">
-                                Take Offline
-                            </a>
-                                            </li>
-                    <li class="divider"></li>
-                    <li><a tabindex="-1" href="/cms/pages/">Leave Stage</a></li>
-                </ul><!-- dropdown-menu -->
-            </div><!-- dropdown -->
-        </div><!-- options -->
-    </div><!-- builder -->
-
+    
             <div class="container addable" data-block="1">
             <div class="row addable" data-block="2"  data-id="2">
             <div class="span4 removeable" data-id="3">
@@ -76,109 +48,11 @@
 </div><!-- span4 -->            <div class="span4 removeable" data-id="5">
     I am on the right
 </div><!-- span4 -->    </div><!-- row -->    </div><!-- container -->    
-    <div class="modal hide fade" id="page-add-block">
-    <div class="modal-header">
-        <h3>Add Content Block</h3>
-    </div><!-- modal-header -->
-    <div class="modal-body">
-            <p>
-        Use the form below to add content blocks
-    </p>
-    
-    <form id="form-add-block" class="form form-inline" 
-          action="/cms/pages/10/add_block"
-          method="post">
-        <label for="content_block_content_block_type">
-            <select name="content_block[content_block_type]" id="content_block_content_block_type">
-                                    <option value="1">
-                        Container
-                    </option>
-                                    <option value="2">
-                        Row
-                    </option>
-                                    <option value="3">
-                        Span 3
-                    </option>
-                                    <option value="4">
-                        Span 4
-                    </option>
-                            </select>
-        </label>
-        
-        <input type="text" 
-               id="content_block_content_block_content" 
-               name="content_block[content]"
-               value="New block" />
-        
-        <input type="hidden" 
-               id="content_block_parent" 
-               name="content_block[parent]"
-               value="" />
-                
-    </form>
-    </div><!-- modal-body -->
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-        <a href="#" id="btn-add-block" class="btn btn-primary">Save</a>
-    </div><!-- modal-footer -->
-</div><!-- modal -->    <div class="modal hide fade" id="page-edit-block">
-    <div class="modal-header">
-        <h3>Edit Content Block</h3>
-    </div><!-- modal-header -->
-    <div class="modal-body">
-            <p>
-        Edit the contents of this block.
-    </p>
-
-    <form id="form-block-edit" class="form form-inline"
-          action=""
-          method="post">
-
-        <input type="text"
-               id="edit_content_block_content_block_content"
-               name="content_block[content]"
-               value="Edit block" />
-
-    </form>
-    </div><!-- modal-body -->
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-        <a href="#" id="btn-block-update" class="btn btn-primary">Save</a>
-    </div><!-- modal-footer -->
-</div><!-- modal -->    <div class="modal hide fade" id="page-block-menu">
-    <div class="modal-header">
-        <h3>What Would You Like To Do?</h3>
-    </div><!-- modal-header -->
-    <div class="modal-body">
-            <p>
-        What would you like to do? You have the below options:
-    </p>
-
-    <div class="btn-group">
-        <a href="#" class="btn" id="btn-block-add">Add another block</a>
-        <a href="#" class="btn" id="btn-block-edit">Edit this block</a>
-
-        <form method="post" id="form-block-destroy">
-            <input type="submit" class="btn btn-danger" value="Remove this block" />
-        </form>
-    </div><!-- btn-group -->
-    </div><!-- modal-body -->
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-        <a href="#" id="" class="btn btn-primary">Save</a>
-    </div><!-- modal-footer -->
-</div><!-- modal -->
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/application.js"></script>
-    <script src="/js/pages.js"></script>
 
-    <script>
-        page = new Mh.app.pages();
-        page.attachEventListeners("stage");
-    </script>
-    
-<div id="sfwdt50bfdf5725714" class="sf-toolbar" style="display: none"></div><script type="text/javascript">/*<![CDATA[*/    Sfjs = (function() {        "use strict";        var noop = function() {},            request = function(url, onSuccess, onError, payload, options) {                var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');                options = options || {};                xhr.open(options.method || 'GET', url, true);                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');                xhr.onreadystatechange = function(state) {                    if (4 === xhr.readyState && 200 === xhr.status) {                        (onSuccess || noop)(xhr);                    } else if (4 === xhr.readyState && xhr.status != 200) {                        (onError || noop)(xhr);                    }                };                xhr.send(payload || '');            },            hasClass = function(el, klass) {                return el.className.match(new RegExp('\\b' + klass + '\\b'));            },            removeClass = function(el, klass) {                el.className = el.className.replace(new RegExp('\\b' + klass + '\\b'), ' ');            },            addClass = function(el, klass) {                if (!hasClass(el, klass)) { el.className += " " + klass; }            };        return {            hasClass: hasClass,            removeClass: removeClass,            addClass: addClass,            request: request,            load: function(selector, url, onSuccess, onError, options) {                var el = document.getElementById(selector);                if (el && el.getAttribute('data-sfurl') !== url) {                    request(                        url,                        function(xhr) {                            el.innerHTML = xhr.responseText;                            el.setAttribute('data-sfurl', url);                            removeClass(el, 'loading');                            (onSuccess || noop)(xhr, el);                        },                        function(xhr) { (onError || noop)(xhr, el); },                        options                    );                }                return this;            },            toggle: function(selector, elOn, elOff) {                var i,                    style,                    tmp = elOn.style.display,                    el = document.getElementById(selector);                elOn.style.display = elOff.style.display;                elOff.style.display = tmp;                if (el) {                    el.style.display = 'none' === tmp ? 'none' : 'block';                }                return this;            }        }    })();/*]]>*/</script><script type="text/javascript">/*<![CDATA[*/    (function () {                Sfjs.load(            'sfwdt50bfdf5725714',            '/_wdt/50bfdf5725714',            function(xhr, el) {                el.style.display = -1 !== xhr.responseText.indexOf('sf-toolbarreset') ? 'block' : 'none';            },            function(xhr) {                if (xhr.status !== 0) {                    confirm('An error occurred while loading the web debug toolbar (' + xhr.status + ': ' + xhr.statusText + ').\n\nDo you want to open the profiler?') && (window.location = '/_profiler/50bfdf5725714');                }            }        );    })();/*]]>*/</script>
+        
+<div id="sfwdt50c11fc1e6397" class="sf-toolbar" style="display: none"></div><script type="text/javascript">/*<![CDATA[*/    Sfjs = (function() {        "use strict";        var noop = function() {},            request = function(url, onSuccess, onError, payload, options) {                var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');                options = options || {};                xhr.open(options.method || 'GET', url, true);                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');                xhr.onreadystatechange = function(state) {                    if (4 === xhr.readyState && 200 === xhr.status) {                        (onSuccess || noop)(xhr);                    } else if (4 === xhr.readyState && xhr.status != 200) {                        (onError || noop)(xhr);                    }                };                xhr.send(payload || '');            },            hasClass = function(el, klass) {                return el.className.match(new RegExp('\\b' + klass + '\\b'));            },            removeClass = function(el, klass) {                el.className = el.className.replace(new RegExp('\\b' + klass + '\\b'), ' ');            },            addClass = function(el, klass) {                if (!hasClass(el, klass)) { el.className += " " + klass; }            };        return {            hasClass: hasClass,            removeClass: removeClass,            addClass: addClass,            request: request,            load: function(selector, url, onSuccess, onError, options) {                var el = document.getElementById(selector);                if (el && el.getAttribute('data-sfurl') !== url) {                    request(                        url,                        function(xhr) {                            el.innerHTML = xhr.responseText;                            el.setAttribute('data-sfurl', url);                            removeClass(el, 'loading');                            (onSuccess || noop)(xhr, el);                        },                        function(xhr) { (onError || noop)(xhr, el); },                        options                    );                }                return this;            },            toggle: function(selector, elOn, elOff) {                var i,                    style,                    tmp = elOn.style.display,                    el = document.getElementById(selector);                elOn.style.display = elOff.style.display;                elOff.style.display = tmp;                if (el) {                    el.style.display = 'none' === tmp ? 'none' : 'block';                }                return this;            }        }    })();/*]]>*/</script><script type="text/javascript">/*<![CDATA[*/    (function () {                Sfjs.load(            'sfwdt50c11fc1e6397',            '/_wdt/50c11fc1e6397',            function(xhr, el) {                el.style.display = -1 !== xhr.responseText.indexOf('sf-toolbarreset') ? 'block' : 'none';            },            function(xhr) {                if (xhr.status !== 0) {                    confirm('An error occurred while loading the web debug toolbar (' + xhr.status + ': ' + xhr.statusText + ').\n\nDo you want to open the profiler?') && (window.location = '/_profiler/50c11fc1e6397');                }            }        );    })();/*]]>*/</script>
 </body>
 
 </html>

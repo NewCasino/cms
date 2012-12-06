@@ -15,60 +15,28 @@
 {% block body %}
     <link rel="stylesheet" type="text/css" href="/css/page.stage.css" />
 
-    <div id="builder" class="container-fluid">
-        <div id="options">
-
-            <div class="dropdown">
-                <a href="#" role="menu"
-                   aria-labelledby="dropdownMenu"
-                   class="dropdown-toggle"
-                   data-toggle="dropdown">
-                    <i class="icon-wrench icon-white"></i>
-                </a>
-
-                <!-- Link or button to toggle dropdown -->
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li>
-                        {% if (stage.page.status == 1) %}
-                            <a tabindex="-1"
-                               href="{{ path("pages_unpublish", {pageId: stage.page.id}) }}"
-                               id="btn-page-publish"
-                               data-id="{{ stage.page.id }}"
-                               class="publish">
-                                Take Offline
-                            </a>
-                        {% else %}
-                            <a tabindex="-1"
-                               href="{{ path("pages_publish", {pageId: stage.page.id}) }}"
-                               id="btn-page-publish"
-                               data-id="{{ stage.page.id }}"
-                               class="publish">
-                                Publish Page
-                            </a>
-                        {% endif %}
-                    </li>
-                    <li class="divider"></li>
-                    <li><a tabindex="-1" href="{{ path("pages") }}">Leave Stage</a></li>
-                </ul><!-- dropdown-menu -->
-            </div><!-- dropdown -->
-        </div><!-- options -->
-    </div><!-- builder -->
+    {% if publish == false %}
+        {% include "MhCmsBundle:Page:builder.html.twig" %}
+    {% endif %}
 
     {% for content in stage.page.contentblocks %}
         {% include content.contentblocktype.contentblocktemplate.templateincludepath %}
     {% endfor %}
 
-    {% include "MhCmsBundle:Page:add_block.html.twig" %}
-    {% include "MhCmsBundle:Page:edit_block.html.twig" %}
-    {% include "MhCmsBundle:Page:block_menu.html.twig" %}
-
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/application.js"></script>
-    <script src="/js/pages.js"></script>
 
-    <script>
-        page = new Mh.app.pages();
-        page.attachEventListeners("stage");
-    </script>
+    {% if publish == false %}
+        {% include "MhCmsBundle:Page:add_block.html.twig" %}
+        {% include "MhCmsBundle:Page:edit_block.html.twig" %}
+        {% include "MhCmsBundle:Page:block_menu.html.twig" %}
+
+        <script src="/js/application.js"></script>
+        <script src="/js/pages.js"></script>
+
+        <script>
+            page = new Mh.app.pages();
+            page.attachEventListeners("stage");
+        </script>
+    {% endif %}
 {% endblock %}
