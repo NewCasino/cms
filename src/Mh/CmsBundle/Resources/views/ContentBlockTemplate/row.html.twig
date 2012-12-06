@@ -1,4 +1,4 @@
-<div class="row addable" data-block="{{ child.id }}">
+<div class="row addable" data-block="{{ child.id }}"  data-id="{{ child.id }}">
     {% for child in content.children %}
         {% include child.contentblocktype.contentblocktemplate.templateincludepath with {content : child} %}
     {% endfor %}

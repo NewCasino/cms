@@ -80,7 +80,7 @@ class ContentBlockController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('content-blocks_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('content_blocks_show', array('id' => $entity->getId())));
         }
 
         return $this->render('MhCmsBundle:ContentBlock:new.html.twig', array(
@@ -123,26 +123,25 @@ class ContentBlockController extends Controller
 
         $entity = $em->getRepository('MhCmsBundle:ContentBlock')->find($id);
 
+        $redirect = $this->getRequest()->headers->get('referer');
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ContentBlock entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ContentBlockType(), $entity);
-        $editForm->bind($request);
+        //$deleteForm = $this->createDeleteForm($id);
+        //$editForm = $this->createForm(new ContentBlockType(), $entity);
+        //$editForm->bind($request);
 
-        if ($editForm->isValid()) {
+        //if ($editForm->isValid()) {
             $em->persist($entity);
+            $entity->setContentBlockContent($_POST["content_block"]["content"]);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('content-blocks_edit', array('id' => $id)));
-        }
+            return $this->redirect($redirect);
+        //}
 
-        return $this->render('MhCmsBundle:ContentBlock:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        //return $this->redirect($redirect);
     }
 
     /**
@@ -151,10 +150,10 @@ class ContentBlockController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        //$form = $this->createDeleteForm($id);
+        //$form->bind($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('MhCmsBundle:ContentBlock')->find($id);
 
@@ -164,9 +163,11 @@ class ContentBlockController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
-        return $this->redirect($this->generateUrl('content-blocks'));
+        $redirect = $this->getRequest()->headers->get('referer');
+
+        return $this->redirect($redirect);
     }
 
     private function createDeleteForm($id)

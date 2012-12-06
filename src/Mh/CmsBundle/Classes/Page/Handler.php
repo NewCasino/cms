@@ -6,7 +6,7 @@
  * @author Mike Hart
  * @version 0.1
  * @copyright (c) 2012, Mike Hart
- * 
+ *
  * @package CmsBundle
  * @subpackage Page
  */
@@ -28,36 +28,43 @@ class Handler
 {
     /**
      * Holds a page instance.
-     * 
-     * @var Page 
+     *
+     * @var Page
      */
     private $page;
-    
+
     /**
 	 * Holds an instance of the current user.
-	 * 
+	 *
 	 * @var User
 	 */
 	private $operator;
-	
+
 	/**
-	 * Holds an instance of the security context for this 
+	 * Holds an instance of the security context for this
 	 * current session.
-	 * 
+	 *
 	 * @var SecurityContext
 	 */
 	private $securityContext;
-	
+
 	/**
 	 * Holds a doctrine entity manager instance.
-	 * 
+	 *
 	 * @var EntityManager
 	 */
 	private $entityManager;
-    
+
+    /**
+     * Holds a request instance.
+     *
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+
     /**
 	 * Populates the object.
-	 * 
+	 *
 	 * @param SecurityContext $securityContext
 	 * @return void
 	 */
@@ -66,27 +73,31 @@ class Handler
 		$this->securityContext = $securityContext;
 		$this->operator = $this->securityContext->getToken()->getUser();
 		$this->entityManager = $em;
-		$this->entityManager->persist($this->operator);
-        
+
+        if ($this->operator instanceof Mh\UserBundle\Entity\User)
+            $this->entityManager->persist($this->operator);
+
+        $this->request = $container->get("request");
+
         $pageId = $container->get("request")->attributes->get("pageId");
-        
+
         if ($pageId)
             $this->page = $this->fetchPage($pageId);
 	}
-    
+
     public function getURIGenerator()
     {
         return new URIGenerator();
     }
-    
+
     public function getOperator()
     {
         return $this->operator;
     }
-    
+
     /**
      * Fetch a block instance from the db.
-     * 
+     *
      * @param integer $blockId
      * @return \Mh\CmsBundle\Entity\ContentBlock
      */
@@ -95,41 +106,43 @@ class Handler
         $repo = $this->entityManager->getRepository("MhCmsBundle:ContentBlock");
         $block = $repo->find($blockId);
         //$this->entityManager->persist($block);
-        
+
         return $block;
     }
-    
+
     /**
      * Fetch a block instance from the db.
-     * 
+     *
      * @param integer $blockTypeId
      * @return \Mh\CmsBundle\Entity\ContentBlockType
      */
     public function fetchBlockType($blockTypeId)
     {
-        $repo = 
+        $repo =
             $this->entityManager->getRepository("MhCmsBundle:ContentBlockType");
-        
+
         return $repo->find($blockTypeId);
     }
-    
+
     /**
      * Retrieve a page by id.
-     * 
+     *
      * @param integer $id
      * @return Page
      */
-    private function fetchPage($id)
+    protected function fetchPage($id)
     {
         $this->page = $this->entityManager->getRepository("MhCmsBundle:Page")->find($id);
-        $this->entityManager->persist($this->page);
-        
+
+        if ($this->page instanceof Page)
+            $this->entityManager->persist($this->page);
+
         return $this->page;
     }
-    
+
     /**
      * Queries the db for all pages in the current operators active website.
-     * 
+     *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function fetchAll()
@@ -140,12 +153,12 @@ class Handler
                     "website" => $this->operator->getActiveWebsite())
                 );
     }
-    
+
     public function getPage()
     {
         return $this->page;
     }
-    
+
     public function getEm()
     {
         return $this->entityManager;
@@ -153,7 +166,7 @@ class Handler
 
     /**
      * Creates a page instance.
-     * 
+     *
      * @todo Move to Builder class.
      * @param string $name The name of the page to be created.
      * @param integer|null $pageMaxChildren Max children for page. Default is 10.
@@ -163,15 +176,15 @@ class Handler
     public function createPage($name, $pageMaxChildren = 10, Page $parent = null)
     {
         $prefix = null;
-        
+
         if ($parent instanceof Page)
             $prefix = $parent->getPageUri();
-        
+
         $pageUri = $this->getURIGenerator()
                         ->setPayload($name)
                         ->setPrefix($prefix)
                         ->process();
-               
+
         try {
             $this->page = new Page();
             $this->entityManager->persist($this->page);
@@ -190,11 +203,36 @@ class Handler
 
     /**
      * Set the page.
-     * 
+     *
      * @param \Mh\CmsBundle\Entity\Page $page
      */
     public function setPage(Page $page)
     {
         $this->page = $page;
+    }
+
+    public function publishPage()
+    {
+        $cacher = new Cacher($this->getPage());
+        $cacher->doCache();
+
+        $this->getPage()->setStatus(Page::STATUS_PUBLISHED);
+        $this->getEm()->flush();
+    }
+
+    public function unPublishPage()
+    {
+        $this->getPage()->setStatus(Page::STATUS_NOT_PUBLISHED);
+        $this->getEm()->flush();
+    }
+
+    /**
+     * Get the request object
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 }

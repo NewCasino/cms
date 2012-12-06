@@ -1,0 +1,20 @@
+{% extends "MhCmsBundle:Default:modal.html.twig" %}
+{% block modal_title %}Edit Content Block{% endblock %}
+{% block modal_id %}page-edit-block{% endblock %}
+{% block modal_body %}
+    <p>
+        Edit the contents of this block.
+    </p>
+
+    <form id="form-block-edit" class="form form-inline"
+          action=""
+          method="post">
+
+        <input type="text"
+               id="edit_content_block_content_block_content"
+               name="content_block[content]"
+               value="Edit block" />
+
+    </form>
+{% endblock %}
+{% block modal_submit_id %}btn-block-update{% endblock %}

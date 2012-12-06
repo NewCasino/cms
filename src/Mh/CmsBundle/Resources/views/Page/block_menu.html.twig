@@ -1,16 +1,17 @@
-<link rel="stylesheet" type="text/css" href="/css/page.stage.css" />
+{% extends "MhCmsBundle:Default:modal.html.twig" %}
+{% block modal_title %}What Would You Like To Do?{% endblock %}
+{% block modal_id %}page-block-menu{% endblock %}
+{% block modal_body %}
+    <p>
+        What would you like to do? You have the below options:
+    </p>
 
-<div class="navbar navbar-inverse" id="builder-nav">
-    <div class="navbar-inner">
-        <div class="brand">
-            {{ stage.page.website.websitename }}
-        </div><!-- brand -->
-        <div class="nav-collapse collapse">
-            <ul class="nav pull-right">
-                <li><a href="#" id="btn-block-add">Add child block</a></li>
-                <li><a href="#" id="btn-block-edit">Edit this block</a></li>
-                <li><a href="#" id="btn-block-delete">Delete this block</a></li>
-            </ul>
-        </div><!-- nav-collapse -->
-    </div><!-- navbar-inner -->
-</div><!-- nav-bar -->
+    <div class="btn-group">
+        <a href="#" class="btn" id="btn-block-add">Add another block</a>
+        <a href="#" class="btn" id="btn-block-edit">Edit this block</a>
+
+        <form method="post" id="form-block-destroy">
+            <input type="submit" class="btn btn-danger" value="Remove this block" />
+        </form>
+    </div><!-- btn-group -->
+{% endblock %}

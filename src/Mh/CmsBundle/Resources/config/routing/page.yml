@@ -18,7 +18,7 @@ pages_create:
 pages_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "MhCmsBundle:Page:edit" }
-    
+
 pages_stage:
     pattern:  /{pageId}/stage
     defaults: { _controller: "MhCmsBundle:Page:stage" }
@@ -36,7 +36,15 @@ pages_delete:
 pages_add_block:
     pattern: /{pageId}/add_block
     defaults: { _controller: "MhCmsBundle:Page:addBlock" }
-    
+
 pages_remove_sub_block:
     pattern: /{pageId}/remove_sub_block
     defaults: { _controller: "MhCmsBundle:Page:removeSubBlock" }
+
+pages_publish:
+    pattern: /{pageId}/publish
+    defaults: {_controller: "MhCmsBundle:Page:publish"}
+
+pages_unpublish:
+    pattern: /{pageId}/unpublish
+    defaults: {_controller: "MhCmsBundle:Page:unPublish"}

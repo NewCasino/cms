@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Mh\CmsBundle\Entity\Website
  *
- * @ORM\Table()
+ * @ORM\Table(name="website")
  * @ORM\Entity
  */
 class Website
@@ -49,15 +49,15 @@ class Website
      * @ORM\Column(name="website_active", type="smallint")
      */
     private $website_active;
-    
+
     /**
      * Holds the pages that belong to this website.
-     * 
+     *
      * @ORM\OneToMany(targetEntity="Page", mappedBy="website")
      * @var ArrayCollection
      */
     private $pages;
-    
+
     /**
      * Holds the user to website allocation for this website.
      *
@@ -65,19 +65,31 @@ class Website
      * @var ArrayCollection
      */
     //private $allocation;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Mh\UserBundle\Entity\User", inversedBy="websites");
-     * 
-     * @var ArrayCollection 
+     *
+     * @var ArrayCollection
      */
     private $users;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Mh\UserBundle\Entity\User", mappedBy="active_website")
-     * @var ArrayCollection 
+     * @var ArrayCollection
      */
     private $active_users;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Mh\CmsBundle\Entity\WebsiteExternal", mappedBy="websites")
+     * @var ArrayCollection
+     */
+    private $website_externals;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Domain", mappedBy="website")
+     * @var ArrayCollection
+     */
+    private $domain_names;
 
     /**
      * Constructor
@@ -87,9 +99,11 @@ class Website
         $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->active_users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->website_externals = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->domain_names = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    public function __toString() 
+
+    public function __toString()
     {
         return $this->getWebsiteName();
     }
@@ -97,7 +111,7 @@ class Website
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -113,14 +127,14 @@ class Website
     public function setWebsiteName($websiteName)
     {
         $this->website_name = $websiteName;
-    
+
         return $this;
     }
 
     /**
      * Get website_name
      *
-     * @return string 
+     * @return string
      */
     public function getWebsiteName()
     {
@@ -136,14 +150,14 @@ class Website
     public function setWebsiteCreatedAt($websiteCreatedAt)
     {
         $this->website_created_at = $websiteCreatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get website_created_at
      *
-     * @return integer 
+     * @return integer
      */
     public function getWebsiteCreatedAt()
     {
@@ -159,14 +173,14 @@ class Website
     public function setWebsiteRenewalDate($websiteRenewalDate)
     {
         $this->website_renewal_date = $websiteRenewalDate;
-    
+
         return $this;
     }
 
     /**
      * Get website_renewal_date
      *
-     * @return integer 
+     * @return integer
      */
     public function getWebsiteRenewalDate()
     {
@@ -182,14 +196,14 @@ class Website
     public function setWebsiteActive($websiteActive)
     {
         $this->website_active = $websiteActive;
-    
+
         return $this;
     }
 
     /**
      * Get website_active
      *
-     * @return integer 
+     * @return integer
      */
     public function getWebsiteActive()
     {
@@ -205,7 +219,7 @@ class Website
     public function addPage(\Mh\CmsBundle\Entity\Page $pages)
     {
         $this->pages[] = $pages;
-    
+
         return $this;
     }
 
@@ -222,7 +236,7 @@ class Website
     /**
      * Get pages
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPages()
     {
@@ -238,7 +252,7 @@ class Website
     public function addUser(\Mh\UserBundle\Entity\User $users)
     {
         $this->users[] = $users;
-    
+
         return $this;
     }
 
@@ -255,7 +269,7 @@ class Website
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {
@@ -271,7 +285,7 @@ class Website
     public function addActiveUser(\Mh\UserBundle\Entity\User $activeUsers)
     {
         $this->active_users[] = $activeUsers;
-    
+
         return $this;
     }
 
@@ -288,10 +302,43 @@ class Website
     /**
      * Get active_users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getActiveUsers()
     {
         return $this->active_users;
+    }
+
+    /**
+     * Add website_externals
+     *
+     * @param \Mh\CmsBundle\Entity\WebsiteExternal $websiteExternals
+     * @return Website
+     */
+    public function addWebsiteExternal(\Mh\CmsBundle\Entity\WebsiteExternal $websiteExternals)
+    {
+        $this->website_externals[] = $websiteExternals;
+
+        return $this;
+    }
+
+    /**
+     * Remove website_externals
+     *
+     * @param \Mh\CmsBundle\Entity\WebsiteExternal $websiteExternals
+     */
+    public function removeWebsiteExternal(\Mh\CmsBundle\Entity\WebsiteExternal $websiteExternals)
+    {
+        $this->website_externals->removeElement($websiteExternals);
+    }
+
+    /**
+     * Get website_externals
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWebsiteExternals()
+    {
+        return $this->website_externals;
     }
 }

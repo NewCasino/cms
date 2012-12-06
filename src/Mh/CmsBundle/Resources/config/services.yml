@@ -9,15 +9,19 @@ services:
   website_allocation_handler:
       class: Mh\CmsBundle\Classes\Website\AllocationHandler
       arguments: [@security.context, @doctrine.orm.entity_manager]
-      
+
   mh.page.handler:
       class: Mh\CmsBundle\Classes\Page\Handler
       arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]
-      
+
   mh.page.stager:
       class: Mh\CmsBundle\Classes\Page\Stager
       arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]
-      
+
   mh.page.builder:
       class: Mh\CmsBundle\Classes\Page\Builder
+      arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]
+
+  mh.page.landing:
+      class: Mh\CmsBundle\Classes\Page\Landing
       arguments: [@security.context, @doctrine.orm.entity_manager, @service_container]

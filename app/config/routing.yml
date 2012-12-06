@@ -1,7 +1,7 @@
 mh_user:
     resource: "@MhUserBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 mh_cms:
     resource: "@MhCmsBundle/Resources/config/routing.yml"
     prefix:   /cms
@@ -10,6 +10,10 @@ mh_cms:
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #    prefix:   /_internal
+
+default_home:
+    pattern:  /
+    defaults: { _controller: MhCmsBundle:default:index }
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

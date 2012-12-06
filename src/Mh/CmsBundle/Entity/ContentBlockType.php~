@@ -33,17 +33,17 @@ class ContentBlockType
      * @var ArrayCollection
      */
     private $content_blocks;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="ContentBlockTemplate")
      * @var ArrayCollection
      */
     private $content_block_template;
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -59,14 +59,14 @@ class ContentBlockType
     public function setContentBlockTypeName($contentBlockTypeName)
     {
         $this->content_block_type_name = $contentBlockTypeName;
-    
+
         return $this;
     }
 
     /**
      * Get content_block_type_name
      *
-     * @return string 
+     * @return string
      */
     public function getContentBlockTypeName()
     {
@@ -79,7 +79,7 @@ class ContentBlockType
     {
         $this->content_blocks = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add content_blocks
      *
@@ -89,7 +89,7 @@ class ContentBlockType
     public function addContentBlock(\Mh\CmsBundle\Entity\ContentBlock $contentBlocks)
     {
         $this->content_blocks[] = $contentBlocks;
-    
+
         return $this;
     }
 
@@ -106,7 +106,7 @@ class ContentBlockType
     /**
      * Get content_blocks
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getContentBlocks()
     {
@@ -122,17 +122,22 @@ class ContentBlockType
     public function setContentBlockTemplate(\Mh\CmsBundle\Entity\ContentBlockTemplate $contentBlockTemplate = null)
     {
         $this->content_block_template = $contentBlockTemplate;
-    
+
         return $this;
     }
 
     /**
      * Get content_block_template
      *
-     * @return Mh\CmsBundle\Entity\ContentBlockTemplate 
+     * @return Mh\CmsBundle\Entity\ContentBlockTemplate
      */
     public function getContentBlockTemplate()
     {
         return $this->content_block_template;
+    }
+
+    public function __toString()
+    {
+        return $this->getContentBlockTypeName();
     }
 }

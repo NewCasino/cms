@@ -14,6 +14,32 @@ use Mh\CmsBundle\Form\PageType;
  */
 class PageController extends Controller
 {
+    public function publishAction($pageId)
+    {
+        $handler = $this->get("mh.page.handler");
+        $handler->publishPage();
+
+        return $this->redirect(
+            $this->generateUrl(
+                "pages_stage",
+                array("pageId" => $handler->getPage()->getId())
+            )
+        );
+    }
+
+    public function unPublishAction($pageId)
+    {
+        $handler = $this->get("mh.page.handler");
+        $handler->unPublishPage();
+
+        return $this->redirect(
+            $this->generateUrl(
+                "pages_stage",
+                array("pageId" => $handler->getPage()->getId())
+            )
+        );
+    }
+
     /**
      * Lists all Page entities.
      *
@@ -23,7 +49,7 @@ class PageController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MhCmsBundle:Page')->findAll();
-        
+
         // We need to provide a new form for the modal to use.
         $entity = new Page();
         $form   = $this->createForm(
@@ -57,22 +83,22 @@ class PageController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
-    
+
     private function createPageFromRequest(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $data = $this->getRequest()->request->all();
         $name = $data["page"]["page_name"];
         $maxChildren = $data["page"]["page_max_children"];
         $parent = $data["page"]["page_parent"];
-        
+
         if ($parent) {
             $parent = $em->getRepository("MhCmsBundle:Page")->find($parent);
         } else {
             $parent = null;
         }
-                
+
         try {
             $handler = $this->get("mh.page.handler");
             return $handler->createPage($name, $maxChildren, $parent);
@@ -80,19 +106,19 @@ class PageController extends Controller
             $this->get("session")->getFlashBag()->add("error", $e->getMessage());
         }
     }
-    
+
     /**
      * Provides a means to display a page in a staging environment.
-     * 
+     *
      * @param integer $pageId
      */
     public function stageAction($pageId)
     {
         $vars = array(
-            "stage" => $this->get("mh.page.stager"), 
+            "stage" => $this->get("mh.page.stager"),
             "mode" => "build"
         );
-                
+
         return $this->render("MhCmsBundle:Page:stage.html.twig", $vars);
     }
 
@@ -215,12 +241,12 @@ class PageController extends Controller
             ->getForm()
         ;
     }
-    
+
     public function removeSubBlockAction()
     {
         $builder = $this->get("mh.page.builder");
         //$range = range(9, 15);
-        
+
         //foreach ($range as $int) {
             $builder->removeSubBlock(17);
         //}
@@ -231,19 +257,19 @@ class PageController extends Controller
     public function addBlockAction($pageId)
     {
         $data = $this->getRequest()->request->get("content_block");
-        
+
         try {
             $builder = $this->get("mh.page.builder");
             $block = $builder->addSubBlock($data);
         } catch (PageNotFoundException $e) {
             die("add a proper error here.");
         }
-        
+
         if ($this->getRequest()->isXmlHttpRequest()) {
             $path = $block->getContentBlockType()->getContentBlockTemplate()->getTemplateIncludePath();
             return $this->render($path, array("content" => $block));
         }
-        
+
         return $this->redirect($this->generateUrl(
             "pages_stage", array("pageId" => $pageId)
         ));

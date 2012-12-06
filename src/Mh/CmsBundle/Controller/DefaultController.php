@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('MhCmsBundle:Default:index.html.twig', array('name' => $name));
+        $handler = $this->get("mh.page.landing");
+
+        return $this->render('MhCmsBundle:Page:published/' . $handler->generateIncludePath());
     }
 }

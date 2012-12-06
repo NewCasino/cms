@@ -27,14 +27,14 @@ class ContactType
      * @ORM\Column(name="contact_type_name", type="string", length=15)
      */
     private $contact_type_name;
-    
-    
+
+
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -50,14 +50,14 @@ class ContactType
     public function setContactTypeName($contactTypeName)
     {
         $this->contact_type_name = $contactTypeName;
-    
+
         return $this;
     }
 
     /**
      * Get contact_type_name
      *
-     * @return string 
+     * @return string
      */
     public function getContactTypeName()
     {
